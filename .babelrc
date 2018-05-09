@@ -1,6 +1,6 @@
 {
   "presets": [
-    "es2015", "stage-0", "react"
+    "env", "stage-0", "react"
   ],
   "plugins": [
     ["import", { libraryName: "antd", style: true }], // `style: true` 会加载 less 文件

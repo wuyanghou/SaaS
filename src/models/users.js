@@ -4,9 +4,9 @@ import * as usersService from '../services';
 export default {
   namespace: 'users',
   state: {
-    list: [],
-    total: null,
-    page: null,
+    list: [1,2,3,4,5],
+    total: 100,
+    page: 10,
   },
   reducers: {
     save(state, { payload: { data: list, total, page } }) {
