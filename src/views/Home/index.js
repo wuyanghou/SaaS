@@ -1,7 +1,6 @@
 /**
  * Created by luoming on 2018/5/5
  */
-import React from 'react';
 import {connect} from 'dva';
 import Button from 'COMMON_COMPONENT/Button';
 import styles from './index.less';

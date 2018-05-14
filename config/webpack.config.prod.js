@@ -353,6 +353,10 @@ module.exports = {
         ],
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            React: 'react',
+            moment: 'moment'
+        }),
         new webpack.DllReferencePlugin({
             context: path.join(__dirname, '../', 'public'),
             manifest: require(path.join(__dirname, '../', 'public/vendor/vendor-manifest.json'))

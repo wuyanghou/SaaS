@@ -20,7 +20,7 @@ module.exports = {
         library: '[name]_[hash]',
     },
     plugins: [
-        // 文件输出到 ./manifest.json 中
+        // 文件输出到 ./vendor 中
         new webpack.DllPlugin({
             path: path.join(__dirname, '../', 'public/vendor', '[name]-manifest.json'),
             name: '[name]_[hash]',
