@@ -176,7 +176,9 @@ module.exports = {
                                 options: {
                                     importLoaders: 1,
                                     minimize: true,
-                                    sourceMap: false
+                                    sourceMap: false,
+                                    modules: true,
+                                    localIdentName: "[local]_[hash:base64:8]"
                                 },
                             },
                                 {
@@ -214,7 +216,9 @@ module.exports = {
                                 options: {
                                     importLoaders: 1,
                                     minimize: true,
-                                    sourceMap: false
+                                    sourceMap: false,
+                                    modules: true,
+                                    localIdentName: "[local]_[hash:base64:8]"
                                 },
                             },
                                 {
