@@ -16,9 +16,9 @@ registerServiceWorker();
 // 1. Initialize
 const app = dva({
     history: createHistory(),
-    onError(e) {
-        ShowMessage(e.message, 'error');
-    }
+    // onError(e) {
+    //     ShowMessage(e.message, 'error');
+    // }
 });
 
 // 2. Plugins

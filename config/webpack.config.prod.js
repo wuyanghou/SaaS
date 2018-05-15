@@ -355,7 +355,9 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin('build', {
-            root: path.join(__dirname,'../'),
+            root: path.join(__dirname,'../'),//根目录
+            verbose:  true,//开启在控制台输出信息
+            dry:      false//启用删除文件
         }),
         new webpack.ProvidePlugin({
             React: 'react',

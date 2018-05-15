@@ -5,8 +5,11 @@ import React from 'react';
 import Button from 'COMMON_COMPONENT/Button';
 import fn from 'ASSET/js/test';
 fn.fn();
+console.log(bbb);
 export default class Home extends React.Component{
-    state={};
+    constructor(props){
+        super(props);
+    }
     render(){
         return (
             <div>
