@@ -28,7 +28,7 @@ const httpGet = async (url, params) => {
     try {
         return res = await request(url, {params});
     } catch (e) {
-        handleError(e, noTips)
+        handleError(e)
     }
 }
 const httpPost = async (url, params, dataType) => {

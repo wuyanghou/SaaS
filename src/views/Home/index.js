@@ -5,12 +5,9 @@ import React from 'react';
 import {connect} from 'dva';
 import Button from 'COMMON_COMPONENT/Button';
 import styles from './index.less';
-import {httpPost} from 'SERVICE/http'
+import api from 'SERVICE/home';
 
-// console.log(undefined.splice(1, 1));
-
-console.log(321);
-console.log(a);
+const {login, logout, saveInformation} = api;
 
 const mapStateToProps = (state) => {
     return {list: state.users.list}
@@ -19,11 +16,17 @@ const mapStateToProps = (state) => {
 export default class Home extends React.Component {
     state = {};
 
-    componentDidMount() {
+    async componentDidMount() {
         console.log(...this.props.list);
-        httpPost('SaaS', {name: 'luoming', age: 27});
-        // console.log(res, 432);
+        let res = await login({name: 'luoming'});
+        console.log(res);
+        logout({age: 23});
+        saveInformation({color: 'red'});
         this.fn();
+    }
+
+    componentWillUnmount() {
+
     }
 
     fn = () => {
