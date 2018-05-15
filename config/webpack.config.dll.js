@@ -2,7 +2,8 @@
  * Created by luoming on 2018/5/4
  */
 const webpack = require('webpack');
-const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const path = require('path');
 const vendors = [
     'axios',
     'dva',
@@ -20,6 +21,10 @@ module.exports = {
         library: '[name]_[hash]',
     },
     plugins: [
+        //清除 vendor文件夹
+        new CleanWebpackPlugin('vendor', {
+            root: path.join(__dirname,'../public'),
+        }),
         // 文件输出到 ./vendor 中
         new webpack.DllPlugin({
             path: path.join(__dirname, '../', 'public/vendor', '[name]-manifest.json'),

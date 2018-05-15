@@ -46,7 +46,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### `npm run build`
 
 ### `npm run buildDll`
-* 第一次打包前，提前编译打包第三方类库，如果第三方类库有变动，需删除/public文件夹里面的vendor，重新运行npm run buildDll
+* 第一次打包前，提前编译打包第三方类库，如果第三方类库有变动，需重新运行npm run buildDll
 
 ### `tips`
 * 项目中使用了公司内部基于antd封装的私有组件库，在运行项目前需要将 XComponents/react-components 拷贝到src/ 下面 改名common_components

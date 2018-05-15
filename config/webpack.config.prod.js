@@ -12,6 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const paths = require('./paths');
 
 const alias = require('./alias');
@@ -353,6 +354,9 @@ module.exports = {
         ],
     },
     plugins: [
+        new CleanWebpackPlugin('build', {
+            root: path.join(__dirname,'../'),
+        }),
         new webpack.ProvidePlugin({
             React: 'react',
             moment: 'moment'
