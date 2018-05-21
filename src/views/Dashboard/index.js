@@ -6,7 +6,13 @@ export default class DashBoard extends React.Component{
     render(){
         return (
             <div>
-                dashboard
+                <div>dashboard</div>
+                <div>dashboard</div>
+                <div>dashboard</div>
+                <div>dashboard</div>
+                <div>dashboard</div>
+                <div>dashboard</div>
+                <div>dashboard</div>
             </div>
         )
     }

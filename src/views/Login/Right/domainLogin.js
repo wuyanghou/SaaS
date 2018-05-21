@@ -2,6 +2,7 @@
  * Created by luoming on 2018/5/16
  */
 import {connect} from 'dva';
+import Item from './item';
 import styles from './domain.less';
 @connect()
 export default class DomainLogin extends React.Component {
@@ -28,8 +29,14 @@ export default class DomainLogin extends React.Component {
                 <div>登录Essential系统</div>
                 <div className={styles.form}>
                     <div>
-                        <span className={'domain ' + (moveToTop ? 'top' : '')}>企业域名</span>
-                        <input type="text" onFocus={this.focus} onBlur={this.blur} value={domain} onChange={e=>this.setState({domain:e.target.value})}/>
+                        <Item
+                            label={'企业域名'}
+                            value={domain}
+                            moveToTop={moveToTop}
+                            focus={e => this.setState({moveToTop: true})}
+                            blur={this.blur}
+                            change={e => this.setState({domain: e.target.value})}
+                        />
                     </div>
                     <span className={styles.line}></span>
                     <button disabled={domain?false:true} className={domain?'':'disabled'} onClick={this.next}>下一步</button>

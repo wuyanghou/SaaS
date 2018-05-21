@@ -1,11 +1,15 @@
 /**
  * Created by luoming on 2018/5/21
  */
-
+import Item from './item';
 import styles from './domain.less';
 
 export default class ForgetDomain extends React.Component {
-    state = {moveToTop: false, domain: ''};
+    state = {
+        moveToTop: false,
+        phone:'',
+        code:''
+    };
     accountBlur = () => {
         let {phone} = this.state;
         if (!phone) this.setState({phoneToTop: false});
@@ -29,7 +33,7 @@ export default class ForgetDomain extends React.Component {
     }
 
     render() {
-        let {phoneToTop, codeToTop, phone, code,showResult=true} = this.state;
+        let {phoneToTop, codeToTop, phone, code,showResult} = this.state;
         return (
             <div style={{height:'100%'}}>
                 {showResult?
@@ -50,16 +54,28 @@ export default class ForgetDomain extends React.Component {
                         <div className={styles.tips}>通过手机号码找回域名</div>
                         <div className={styles.form}>
                             <div>
-                                <span className={'domain ' + (phoneToTop ? 'top' : '')}>手机号码</span>
-                                <input type="text" onFocus={e => this.setState({phoneToTop: true})} onBlur={this.accountBlur}
-                                       value={phone} onChange={e => this.setState({phone: e.target.value})}/>
+                                <Item
+                                    label={'手机号码'}
+                                    value={phone}
+                                    moveToTop={phoneToTop}
+                                    focus={e => this.setState({phoneToTop: true})}
+                                    blur={this.accountBlur}
+                                    change={e => this.setState({phone: e.target.value})}
+                                />
                             </div>
                             <span className={styles.line}></span>
                             <div>
-                                <span className={'domain ' + (codeToTop ? 'top' : '')}>验证码</span>
-                                <span className={styles.getCode} onClick={this.getCode}>获取验证码</span>
-                                <input type='text' onFocus={e => this.setState({codeToTop: true})} onBlur={this.pwdBlur}
-                                       value={code} onChange={e => this.setState({code: e.target.value})}/>
+                                <Item
+                                    label={'验证码'}
+                                    value={code}
+                                    moveToTop={codeToTop}
+                                    type={'password'}
+                                    focus={e => this.setState({codeToTop: true})}
+                                    blur={this.pwdBlur}
+                                    change={e => this.setState({code: e.target.value})}
+                                >
+                                    <span className={styles.getCode} onClick={this.getCode}>获取验证码</span>
+                                </Item>
                             </div>
                             <span className={styles.line}></span>
                             <button disabled={(phone && code) ? false : true} className={(phone && code) ? '' : 'disabled'}

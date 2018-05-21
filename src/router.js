@@ -15,7 +15,7 @@ function RouterConfig({ history, app }) {
         <BrowserRouter>
             <Switch>
                 <Route path="/login" component={Login} />
-                <Route path="/"  exact component={Home} />
+                <Route path="/" component={Home} />
             </Switch>
         </BrowserRouter>
     );

@@ -3,12 +3,13 @@
  */
 import styles from './index.less';
 
-export default class SideBar extends React.Component{
-    state={};
-    render(){
+export default class SideBar extends React.Component {
+    state = {};
+
+    render() {
         return (
-            <div>
-                123
+            <div style={{height: '100%', float: 'left'}}>
+                菜单栏
             </div>
         )
     }
