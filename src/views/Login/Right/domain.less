@@ -1,0 +1,111 @@
+.domain,.account{
+  width: 400px;
+  height: 100%;
+  padding: 0 50px;
+  background: white;
+  float: left;
+  position: relative;
+  &>div:first-of-type{
+    font-size: 32px;
+    color:rgba(30,29,34,1);
+    margin-top: 80px;
+  }
+  &>span{
+    position: absolute;
+    right: 50px;
+    bottom: 30px;
+    cursor: pointer;
+    color:#3363FC;
+  }
+  .form{
+    position: absolute;
+    bottom:180px;
+    &>div{
+      display: inline-block;
+      width: 300px;
+      position: relative;
+      &:after{
+        content:'.ESSENTIAL.COM/OA';
+        position: absolute;
+        right:0;
+      }
+      :global{
+        .domain{
+          color:#1E1D22;
+          pointer-events: none;
+          top:0;
+          position: absolute;
+          z-index: 1;
+          transition: top .5s;
+        }
+        .domain.top{
+          top:-30px;
+          color:#726D86;
+        }
+      }
+
+    }
+    input,button,.line{
+      width: 300px;
+    }
+    input{
+      outline: none;
+      border: none;
+      position: relative;
+    }
+    button{
+      height: 44px;
+      background:linear-gradient(135deg,rgba(123,41,251,1),rgba(49,81,255,1));
+      color:white;
+    }
+    .line{
+      display: inline-block;
+      height: 2px;
+      background: #B9B9CF;
+      margin-bottom: 40px;
+      margin-top: 15px;
+    }
+    :global{
+      .disabled{
+        cursor: not-allowed;
+        opacity: .4;
+      }
+    }
+  }
+}
+
+.account{
+  .form{
+    bottom:90px;
+  }
+  .form>div:after{
+    content: '';
+  }
+}
+.company{
+  margin-top: 70px !important;
+  font-size:24px !important;
+}
+.tips{
+  color:#3363FC;
+  font-size: @fontSizeHeadingSm;
+  margin-top: 15px;
+}
+.getCode{
+  position: absolute;
+  right:0;
+  top:-30px;
+  color:#3363FC;
+  cursor: pointer;
+}
+.infos{
+  margin-top: 15px;
+}
+.companyList{
+  li{
+    margin-top: 40px;
+    color:#3363FC;
+    font-size: @fontSizeHeading;
+    cursor: pointer;
+  }
+}

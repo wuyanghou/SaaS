@@ -11,16 +11,11 @@ function RouterConfig({ history, app }) {
     const Home = dynamic({
         component: () => import('VIEW/Home')
     })
-    const About = dynamic({
-        component: () => import('VIEW/About')
-    })
-
     return (
         <BrowserRouter>
             <Switch>
-                <Route path="/login" exact component={Login} />
+                <Route path="/login" component={Login} />
                 <Route path="/"  exact component={Home} />
-                <Route path="/about" component={About} />
             </Switch>
         </BrowserRouter>
     );
