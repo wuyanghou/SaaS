@@ -28,6 +28,7 @@ export default class AccountLogin extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         let {accountToTop, pwdToTop, account, password, company, showPassword} = this.state;
         return (
             <div className={styles.account}>

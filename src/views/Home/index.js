@@ -12,7 +12,12 @@ import Page from './Page/index';
 const DashBoard = dynamic({
     component: () => import('../Dashboard')
 })
-
+const Personal =dynamic({
+    component: () => import('../Setting/Personal')
+})
+const PersonalEdit= dynamic({
+    component:()=>import('../Setting/Personal/Edit')
+})
 const mapStateToProps = (state) => {
     return {list: state.users.list}
 }
@@ -30,15 +35,18 @@ export default class Home extends React.Component {
     }
 
     render() {
+        const {history}=this.props;
         return (
             <div>
                 <SideBar/>
-                <Page>
+                <Page history={history}>
                     <Switch>
-                        <Route path={`/Dashboard`} component={DashBoard}/>
+                        <Route path='/Dashboard' component={DashBoard}/>
+                        <Route path='/Setting/personal' exact component={Personal}/>
+                        <Route path='/Setting/personal/edit' exact component={PersonalEdit}/>
+                        <Route path='/Setting/alterpwd' component={DashBoard}/>
                     </Switch>
                 </Page>
-
             </div>
         )
     }

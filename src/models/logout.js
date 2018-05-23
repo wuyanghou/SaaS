@@ -4,7 +4,8 @@ export default {
   },
   effects: {
     * getData({payload}, {put, call}) {
-      yield put({
+        console.log(8080);
+        yield put({
         type: 'deleteData',
         payload: {age: 567}
       })

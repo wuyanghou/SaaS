@@ -1,3 +1,25 @@
 .page{
-  overflow: hidden;
+  overflow: auto;
+  background: rgba(244,244,247,1);
+  height: 100vh;
+  padding:0 50px;
+  :global{
+    .head{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+    .top{
+      position: relative;
+      img{
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        margin-left: 15px;
+        vertical-align: middle;
+        border: 1px solid transparent;
+        border-radius: 50%;
+      }
+    }
+  }
 }
