@@ -16,6 +16,26 @@
   background:rgba(255,255,255,1);
   box-shadow: 0 4px 6px 0 rgba(106,101,255,0.07);
   text-align: center;
+  .headPic{
+    position: relative;
+    div{
+      display: inline-block;
+    }
+    span{
+      position: absolute;
+      width: 128px;
+      height: 128px;
+      background: rgba(30,29,34,0.5);
+      border-radius: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+    }
+    div:hover span{
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
   img{
     width: 128px;
     height: 128px;
@@ -35,7 +55,7 @@
   .item{
     margin: 40px auto 0;
     width: 376px;
-    div{
+    &>div{
       text-align: start;
       margin-top: 24px;
     }
@@ -44,7 +64,6 @@
       color:#1E1D22;
       margin-bottom: 30px;
       margin-top: 0;
-      //font-family:PingFangSC-Regular;
     }
   }
   .label{
@@ -63,6 +82,12 @@
   .code + span{
     cursor: pointer;
     color:@primaryColor
+  }
+  .checkBtn{
+    margin-left: 76px;
+    button{
+      margin-right: 20px;
+    }
   }
   :global{
     .ant-radio-button-wrapper{

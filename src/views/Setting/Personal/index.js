@@ -42,6 +42,11 @@ export default class Personal extends React.Component{
                         <span>
                             18317943550
                         </span>
+                    </div>
+                    <div className={styles.details}>
+                        <span>
+                            wuyanghou@qq.com
+                        </span>
                         <span>
                             wuyanghou@qq.com
                         </span>
