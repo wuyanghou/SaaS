@@ -12,11 +12,11 @@ import Page from './Page/index';
 const DashBoard = dynamic({
     component: () => import('../Dashboard')
 })
-const Personal =dynamic({
+const Personal = dynamic({
     component: () => import('../Setting/Personal')
 })
-const PersonalEdit= dynamic({
-    component:()=>import('../Setting/Personal/Edit')
+const PersonalEdit = dynamic({
+    component: () => import('../Setting/Personal/Edit')
 })
 const mapStateToProps = (state) => {
     return {list: state.users.list}
@@ -28,14 +28,18 @@ export default class Home extends React.Component {
     async componentDidMount() {
     }
 
-    componentWillUnmount() {
+    componentWillMount() {
+        const {match, history} = this.props;
+        if (match.path === '/') {
+            history.push('/Dashboard')
+        }
     }
 
     fn = () => {
     }
 
     render() {
-        const {history}=this.props;
+        const {history} = this.props;
         return (
             <div>
                 <SideBar/>

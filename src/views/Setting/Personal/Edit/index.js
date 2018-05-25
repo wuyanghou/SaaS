@@ -6,6 +6,7 @@ import src from '../../../Home/Page/test.jpg';
 import Radio from 'COMMON_COMPONENT/Radio';
 import ShowMessage from 'COMMON_COMPONENT/utils/globalTips/showMessage';
 import Button from 'COMMON_COMPONENT/Button';
+import Icon from 'COMMON_COMPONENT/Icon'
 import Modal from './modal';
 
 const RadioGroup = Radio.Group;
@@ -20,7 +21,7 @@ export default class AlterPerson extends React.Component {
         code: '',
         email: '',
         showCode: false,
-        showModal: true
+        showModal: false
     };
     getCode = () => {
         const {phone} = this.state;
@@ -36,10 +37,17 @@ export default class AlterPerson extends React.Component {
 
     }
 
+    onSuccess=(src)=>{
+        this.setState({src,showModal:false});
+    }
+    componentDidMount(){
+        setTimeout(()=>this.setState({showModal:true}),2000)
+    }
     render() {
-        let {name, sex, sign, userName, phone, code, email, showCode, showModal} = this.state;
+        let {name, sex, sign, userName, phone, code, email, showCode, showModal,src=src} = this.state;
         return (
             <div>
+                <Icon type={'staff_mc'}/>
                 <div className={styles.head}>
                     <span className={styles.title}>个人资料</span>
                 </div>
@@ -98,7 +106,10 @@ export default class AlterPerson extends React.Component {
                     </div>
                 </div>
                 {showModal &&
-                    <Modal/>
+                    <Modal
+                        onClose={e=>this.setState({showModal:false})}
+                        onSuccess={this.onSuccess}
+                    />
                 }
             </div>
         )

@@ -6,6 +6,31 @@
     .ant-modal-title{
       margin-bottom: 30px;
     }
+    input[type="range"] {
+      //-webkit-box-shadow: 0 1px 0 0px #424242, 0 1px 0 #060607 inset, 0px 2px 10px 0px black inset, 1px 0px 2px rgba(0, 0, 0, 0.4) inset, 0 0px 1px rgba(0, 0, 0, 0.6) inset;
+      -webkit-appearance: none;
+      width: 300px;
+      border-radius: 10px
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 8px;
+      border-radius: 10px; /*将轨道设为圆角的*/
+      //box-shadow: 0 1px 1px #def3f8, inset 0 .125em .125em #0d1112; /*轨道内置阴影效果*/
+      background: #5687FF;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      cursor: default;
+      //top: -10px;
+      height: 18px;
+      width: 18px;
+      transform: translateY(0px);
+      background: none repeat scroll 0 0 #5687FF;
+      border-radius: 50%;
+      //-webkit-box-shadow: 0 -1px 1px black inset;
+    }
+
   }
 }
 .block{

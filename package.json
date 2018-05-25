@@ -7,6 +7,7 @@
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.7.0",
     "classnames": "^2.2.5",
+    "croppie": "^2.6.2",
     "dva": "^2.1.0",
     "dva-loading": "^1.0.4",
     "lodash": "^4.17.4",
@@ -109,10 +110,15 @@
       "react-app"
     ]
   },
-  "homepage": "/",
+  "homepage": "/Dashboard",
   "proxy": {
-    "/koa": {
-      "target": "http://127.0.0.1:9999",
+    "/oa/": {
+      "target": "http://xuebang.wirein.net",
+      "secure": false,
+      "changeOrigin": true
+    },
+    "/center/": {
+      "target": "http://xuebang.wirein.net",
       "secure": false,
       "changeOrigin": true
     }

@@ -5,7 +5,7 @@ import axios from 'axios';
 import errors from 'CONSTANT/config';
 
 const defaultOption = {
-    baseURL: '/koa/',
+    baseURL: '/',
     method: 'get',
     withCredentials: true
 }

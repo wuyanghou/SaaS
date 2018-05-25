@@ -4,6 +4,12 @@
 
 import styles from './domain.less';
 import Item from './item';
+import Loading from 'COMMON_COMPONENT/Loading';
+import showMessage from 'COMMON_COMPONENT/utils/globalTips/showMessage';
+import LoginApi from 'SERVICE/login';
+
+const {login, getCompanyInfo} = LoginApi;
+
 
 export default class AccountLogin extends React.Component {
     state = {
@@ -19,7 +25,16 @@ export default class AccountLogin extends React.Component {
         let {password} = this.state;
         if (!password) this.setState({pwdToTop: false});
     }
-    login = () => {
+    login = async () => {
+        let {history} = this.props;
+        let {account, password, secondDomain} = this.state;
+        this.setState({loading: true});
+        let {data} = await login({account, password, secondDomain: 'xuebang'});
+        if (data) {
+            this.setState({loading: false});
+            showMessage('登录成功！','success');
+        }
+        setTimeout(()=> history.push('/Dashboard'),1000);
 
     }
     forgetAccount = () => {
@@ -27,9 +42,12 @@ export default class AccountLogin extends React.Component {
         history.push('/login/forgetAccount');
     }
 
+    componentWillMount() {
+        // getCompanyInfo().then(res=>console.log(res))
+    }
+
     render() {
-        console.log(this.props);
-        let {accountToTop, pwdToTop, account, password, company, showPassword} = this.state;
+        let {accountToTop, pwdToTop, account, password, company, showPassword, loading} = this.state;
         return (
             <div className={styles.account}>
                 <div className={styles.company}>{company || '广州学邦信息技术有限公司'}</div>
@@ -59,11 +77,13 @@ export default class AccountLogin extends React.Component {
                         />
                     </div>
                     <span className={styles.line}></span>
-                    <button disabled={account ? false : true} className={account ? '' : 'disabled'}
+                    <button disabled={(account && password) ? false : true}
+                            className={(account && password) ? '' : 'disabled'}
                             onClick={this.login}>登录
                     </button>
                 </div>
                 <span onClick={this.forgetAccount}>忘记密码？</span>
+                <Loading loading={loading}/>
             </div>
         )
     }
