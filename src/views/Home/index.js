@@ -29,8 +29,9 @@ export default class Home extends React.Component {
     }
 
     componentWillMount() {
-        const {match, history} = this.props;
-        if (match.path === '/') {
+        const {location, history} = this.props;
+        console.log(this.props);
+        if (location.pathname === '/') {
             history.push('/Dashboard')
         }
     }

@@ -7,8 +7,8 @@ import {Croppie} from 'croppie';
 import 'croppie/croppie.css'
 import Modal from 'COMMON_COMPONENT/Modal';
 import img from './test.jpg';
+import ss from './qa.jpg';
 
-console.log(Croppie);
 export default class PicModal extends React.Component {
     resize = null;
     state = {
@@ -21,69 +21,49 @@ export default class PicModal extends React.Component {
     onOk = () => {
         this.setState({loading: true});
         this.resize.result().then((res) => {
-            this.setState({loading:false});
-             this.props.onSuccess(res);
+            this.setState({loading: false});
+            this.props.onSuccess(res);
         })
     }
 
     onLoad = (e) => {
 
     }
-    slideChange = (val) => {
-        this.setState({value: val});
-        let ratio = (val + 33.33) / 33.33;
-        this.$img.width = this.width * ratio;
-        this.$img.height = this.height * ratio;
-
-        let countLeft = this.width * (ratio - 1) / 2;
-        this.$img.style.left = this.offsetLeft - countLeft + 'px'
-    }
 
     componentDidMount() {
+        let {src} = this.props;
+        this.setState({loading: true});
+        setTimeout(() => {
+            this.setState({loading:false})
+            let resize = new Croppie(this.$contain, {
+                maxZoom: 3,
+                viewport: {
+                    width: 240,
+                    height: 240,
+                    type: 'circle'
+                },
+                boundary: {
+                    width: 320,
+                    height: 320
+                },
 
-        let resize = new Croppie(this.$contain, {
-            viewport: {
-                width: 240,
-                height: 240,
-                type: 'circle'
-            },
-            boundary: {
-                width: 320,
-                height: 320
-            },
-            maxZoom: 3
-        });
-        resize.bind({
-            url: img,
-            // zoom:1
-        });
-        this.resize = resize;
+            });
+            this.resize = resize;
+            resize.bind({
+                url: src,
+                // zoom: 1,
+            }).then((res) => {
+            });
+        }, 500)
+
     }
 
     componentWillUnmount() {
         this.resize.destroy();
     }
 
-    addEvent = (obj, sType, fn) => {
-        if (obj.addEventListener) {
-            obj.addEventListener(sType, fn, false);
-        } else {
-            obj.attachEvent('on' + sType, fn);
-        }
-    };
-    removeEvent = (obj, sType, fn) => {
-        obj.removeEventListener(sType, fn, false);
-    }
-    prEvent = (ev) => {
-        let oEvent = ev || window.event;
-        if (oEvent.preventDefault) {
-            oEvent.preventDefault();
-        }
-        return oEvent;
-    }
-
     render() {
-        let {value, loading} = this.state;
+        let {loading} = this.state;
         return (
             <Modal loading={loading}
                    onCancel={this.onClose}
@@ -98,7 +78,7 @@ export default class PicModal extends React.Component {
                    className={styles.modal}
                    ref={e => this.$modal = e}>
                 <div>
-                    <div ref={e => this.$contain = e}>
+                    <div ref={e => this.$contain = e} style={{minHeight:320,minWidth:320}}>
                     </div>
                 </div>
             </Modal>

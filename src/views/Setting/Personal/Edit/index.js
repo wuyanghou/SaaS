@@ -38,13 +38,25 @@ export default class AlterPerson extends React.Component {
     }
 
     onSuccess=(src)=>{
-        this.setState({src,showModal:false});
+        this.setState({clipSrc:src,showModal:false});
     }
+    openImgCheck=()=>{
+        this.$upload.click();
+    }
+    selectFile=(e)=>{
+        let reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload =(e)=> {
+            let src=e.target.result;
+            this.setState({src,showModal:true});
+        }
+    }
+
     componentDidMount(){
-        setTimeout(()=>this.setState({showModal:true}),2000)
+        // setTimeout(()=>this.setState({showModal:true}),2000)
     }
     render() {
-        let {name, sex, sign, userName, phone, code, email, showCode, showModal,src=src} = this.state;
+        let {name, sex, sign, userName, phone, code, email, showCode, showModal,src,clipSrc} = this.state;
         return (
             <div>
                 <Icon type={'staff_mc'}/>
@@ -53,8 +65,9 @@ export default class AlterPerson extends React.Component {
                 </div>
                 <div className={styles.block}>
                     <div className={styles.headPic}>
-                        <div>
-                            <img src={src} alt=""/>
+                        <div onClick={this.openImgCheck}>
+                            <input type="file" ref={e=>this.$upload=e} onChange={this.selectFile}/>
+                            <img src={clipSrc} alt=""/>
                             <span></span>
                         </div>
                     </div>
@@ -109,6 +122,7 @@ export default class AlterPerson extends React.Component {
                     <Modal
                         onClose={e=>this.setState({showModal:false})}
                         onSuccess={this.onSuccess}
+                        src={src}
                     />
                 }
             </div>
