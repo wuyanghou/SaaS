@@ -53,7 +53,7 @@ export default class Personal extends React.Component {
                         </div>
                         <div>
                             <div>
-                                <Icon type={'oa_phone'} size={32}/>
+                                <Icon type={'oa_phone'} size={32} color={'red'}/>
                             </div>
                             <span>
                                 18317943550

@@ -11,14 +11,14 @@ const defaultOption = {
 }
 const request = async (url, option) => {
     option = {...defaultOption, ...option, url};
-    let res
+    let res,status,data;
     try {
         res = await axios(option);
     } catch (e) {
-        throw errors.netError;
+        res=e.response.data;
     }
-    const {status, data} = res;
-
+    data = res.data;
+    status=res.status;
     if (status > 500) {
         throw errors.systemError
     } else if (status === 401) {

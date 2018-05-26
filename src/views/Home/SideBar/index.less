@@ -1,8 +1,11 @@
 .sideBar{
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
   float: left;
   width: 96px;
+  a{
+    color:#726D86
+  }
   div{
     height: 80px;
     width: 100%;
@@ -10,8 +13,12 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    a{
-      color:#726D86
+    &:hover{
+      background: @primaryColor;
+      a{
+        color:white;
+      }
     }
+
   }
 }

@@ -18,6 +18,9 @@ const Personal = dynamic({
 const PersonalEdit = dynamic({
     component: () => import('../Setting/Personal/Edit')
 })
+const NotFound = dynamic({
+    component: () => import('../404')
+})
 const mapStateToProps = (state) => {
     return {list: state.users.list}
 }
@@ -50,6 +53,7 @@ export default class Home extends React.Component {
                         <Route path='/Setting/personal' exact component={Personal}/>
                         <Route path='/Setting/personal/edit' exact component={PersonalEdit}/>
                         <Route path='/Setting/alterpwd' component={DashBoard}/>
+                        <Route path='*' component={NotFound}/>
                     </Switch>
                 </Page>
             </div>

@@ -8,7 +8,7 @@ import Loading from 'COMMON_COMPONENT/Loading';
 import showMessage from 'COMMON_COMPONENT/utils/globalTips/showMessage';
 import LoginApi from 'SERVICE/login';
 
-const {login, getCompanyInfo} = LoginApi;
+const {login, getCompanyInfo, getCompanyByDomain} = LoginApi;
 
 
 export default class AccountLogin extends React.Component {
@@ -29,28 +29,53 @@ export default class AccountLogin extends React.Component {
         let {history} = this.props;
         let {account, password, secondDomain} = this.state;
         this.setState({loading: true});
-        let {data} = await login({account, password, secondDomain: 'xuebang'});
+        let {data, resultMessage} = await login({account, password, secondDomain: 'xuebang'});
+        this.setState({loading: false});
         if (data) {
-            this.setState({loading: false});
-            showMessage('登录成功！','success');
+            showMessage('登录成功！', 'success');
+            setTimeout(() => history.push('/Dashboard'), 1000);
+        } else {
+            showMessage(resultMessage)
         }
-        setTimeout(()=> history.push('/Dashboard'),1000);
 
     }
     forgetAccount = () => {
         let {history} = this.props;
         history.push('/login/forgetAccount');
     }
+    setAccount = (e) => {
+        console.log(e.target.value);
+        this.setState({account: e.target.value.replace(/\s/g, '')})
+    }
 
     componentWillMount() {
-        // getCompanyInfo().then(res=>console.log(res))
+        const {hostname} = window.location;
+        let subDomain;
+        console.log(hostname);
+        if (hostname === 'localhost') {
+            let {location:{query}}=this.props;
+            console.log(query,'query');
+            if(!query)query={domain:'xuebang'}
+            subDomain=query.domain;
+        } else {
+            subDomain = hostname.split('.')[0];
+        }
+        console.log(subDomain);
+
+        this.getCompanyByDomain(subDomain)
+    }
+
+    getCompanyByDomain = async (subDomain) => {
+        this.setState({loading: true})
+        let {name, secondDomain} = await getCompanyByDomain({secondDomain: subDomain});
+        this.setState({name, secondDomain, loading: false});
     }
 
     render() {
-        let {accountToTop, pwdToTop, account, password, company, showPassword, loading} = this.state;
+        let {accountToTop, pwdToTop, account, password, name, showPassword, loading} = this.state;
         return (
             <div className={styles.account}>
-                <div className={styles.company}>{company || '广州学邦信息技术有限公司'}</div>
+                <div className={styles.company}>{name}</div>
                 <div className={styles.tips}>Essential系统</div>
                 <div className={styles.form}>
 
@@ -61,7 +86,8 @@ export default class AccountLogin extends React.Component {
                             moveToTop={accountToTop}
                             focus={e => this.setState({accountToTop: true})}
                             blur={this.accountBlur}
-                            change={e => this.setState({account: e.target.value})}
+                            maxLength={20}
+                            change={e => this.setState({account: e.target.value.replace(/\s/g, '')})}
                         />
                     </div>
                     <span className={styles.line}></span>
@@ -73,7 +99,8 @@ export default class AccountLogin extends React.Component {
                             type={'password'}
                             focus={e => this.setState({pwdToTop: true})}
                             blur={this.pwdBlur}
-                            change={e => this.setState({password: e.target.value})}
+                            maxLength={20}
+                            change={e => this.setState({password: e.target.value.replace(/\s/g, '')})}
                         />
                     </div>
                     <span className={styles.line}></span>

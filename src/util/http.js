@@ -6,15 +6,16 @@ import qs from 'qs';
 import showMessage from 'COMMON_COMPONENT/utils/globalTips/showMessage'
 
 const gotoLoginPage = () => {
-    window.location.href = '';
+    window.location.href = window.location.origin+'/login/accountLogin';
 }
 
 let loginTimeoutHandled;
 const handleError = (e, noTips) => {
+    console.log('logout');
     if (e.errorType === 3) {
         if (!loginTimeoutHandled) {
             showMessage(e.text);
-            gotoLoginPage();
+            setTimeout(()=>gotoLoginPage(),500);
             loginTimeoutHandled = true;
         }
     } else {
@@ -26,7 +27,7 @@ const handleError = (e, noTips) => {
 }
 const httpGet = async (url, params) => {
     try {
-        return res = await request(url, {params});
+        return await request(url, {params});
     } catch (e) {
         handleError(e)
     }
