@@ -51,17 +51,13 @@ export default class AccountLogin extends React.Component {
     componentWillMount() {
         const {hostname} = window.location;
         let subDomain;
-        console.log(hostname);
         if (hostname === 'localhost') {
             let {location:{query}}=this.props;
-            console.log(query,'query');
             if(!query)query={domain:'xuebang'}
             subDomain=query.domain;
         } else {
             subDomain = hostname.split('.')[0];
         }
-        console.log(subDomain);
-
         this.getCompanyByDomain(subDomain)
     }
 

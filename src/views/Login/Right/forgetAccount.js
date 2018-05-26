@@ -3,11 +3,13 @@
  */
 import Item from './item';
 import showMessage from 'COMMON_COMPONENT/utils/globalTips/showMessage';
+import Loading from 'COMMON_COMPONENT/Loading';
 import styles from './domain.less';
 import LoginApi from 'SERVICE/login';
-const {getValiDateCode}=LoginApi;
+
+const {getCode, checkCode} = LoginApi;
 export default class ForgetAccount extends React.Component {
-    codeLimit=0;
+    codeLimit = 0;
     state = {
         moveToTop: false,
         phone: '',
@@ -17,58 +19,82 @@ export default class ForgetAccount extends React.Component {
     };
     accountBlur = () => {
         let {phone} = this.state;
-        if (!phone){
-            this.setState({phoneToTop: false,validate:true});
-        }else{
+        if (!phone) {
+            this.setState({phoneToTop: false, validate: true});
+        } else {
             let validate = /(^010\d{8}$)|(^010-\d{8}$)|(^02[0-9]\d{8}$)|(^02[0-9]-\d{8}$)|(^0[3-9]\d{2}-\\d{7,8}$)|((^0[3-9]\d{9,10}$))|(^[2-9]\d{6,7}$)|(^13\d{9}$)|(^14[145678]\d{8}$)|(^15\d{9}$)|(^166\d{8}$)|(^17[01345678]\d{8}$)|(^18\d{9}$)|(^19[89]\d{8}$)/.test(phone)
             this.setState({validate});
         }
     }
     pwdBlur = () => {
         let {code} = this.state;
-        if (!code){
-            this.setState({codeToTop: false,codeValidate:true});
-        }else{
+        if (!code) {
+            this.setState({codeToTop: false, codeValidate: true});
+        } else {
             let codeValidate = /\d{6}/.test(code);
             this.setState({codeValidate: codeValidate});
         }
     }
     getCode = async () => {
-        let {phone,validate}=this.state;
+        let {phone, validate} = this.state;
 
-        if(!phone){
+        if (!phone) {
             showMessage('请输入电话号码！');
             return;
         }
-        if(!validate){
+        if (!validate) {
             showMessage('电话号码不合格！');
             return;
         }
-        if(this.codeLimit===0){
-
-            let {resultCode,resultMessage}=await getValiDateCode({contact:phone});
-
-            if(resultCode===0){
-                this.codeLimit=1;
-                let count=59;
-                this.setState({codeDisabled:true});
-                this.timer=setInterval(()=>{
-                    this.$code.innerHTML=`${count--} s`;
-                    if(count===0){
+        if (this.codeLimit === 0) {
+            let {resultCode, resultMessage} = await getCode({contact: phone});
+            if (resultCode === 0) {
+                this.codeLimit = 1;
+                let count = 59;
+                this.setState({codeDisabled: true});
+                this.timer = setInterval(() => {
+                    this.$code.innerHTML = `${count--} s`;
+                    if (count === 0) {
                         clearInterval(this.timer);
-                        this.$code.innerHTML='获取验证码';
-                        this.codeLimit=0;
-                        this.setState({codeDisabled:false});
+                        this.$code.innerHTML = '获取验证码';
+                        this.codeLimit = 0;
+                        this.setState({codeDisabled: false});
                     }
-                },1000)
-            }else{
+                }, 1000)
+            } else {
                 showMessage(resultMessage);
             }
         }
     }
-    resetPassword = () => {
-        let {history} = this.props;
-        history.push('/login/resetPassword');
+    resetPassword = async () => {
+        const {history} = this.props;
+        const {phone, code} = this.state;
+        clearInterval(this.timer);
+        const {hostname} = window.location;
+        let secondDomain;
+        if (hostname === 'localhost') {
+            let {location: {query}} = this.props;
+            if (!query) query = {domain: 'xuebang'}
+            secondDomain = query.domain;
+        } else {
+            secondDomain = hostname.split('.')[0];
+        }
+
+        this.setState({loading: true});
+        const {resultCode, resultMessage} = await checkCode({
+            contact: phone,
+            secondDomain,
+            verification: code
+        });
+        // this.setState({loading:false});
+        if (resultCode === 0) {
+            history.push({
+                pathname: '/login/resetPassword',
+                query: {contact:phone,secondDomain}
+            });
+        }else{
+            showMessage('resultMessage')
+        }
     }
     goAccountLogin = () => {
         let {history} = this.props;
@@ -76,7 +102,7 @@ export default class ForgetAccount extends React.Component {
     }
 
     render() {
-        let {phoneToTop, codeToTop, phone, code, validate, codeValidate,codeDisabled} = this.state;
+        let {phoneToTop, codeToTop, phone, code, validate, codeValidate, codeDisabled, loading} = this.state;
         return (
             <div className={styles.account}>
                 <div className={styles.company}>忘记登录密码</div>
@@ -105,15 +131,18 @@ export default class ForgetAccount extends React.Component {
                             maxLength={6}
                             showTips={!codeValidate}
                             change={e => this.setState({code: e.target.value})}>
-                            <span className={styles.getCode + (!codeDisabled?'':' codeDisabled')} onClick={this.getCode} ref={e=>this.$code=e}>获取验证码</span>
+                            <span className={styles.getCode + (!codeDisabled ? '' : ' codeDisabled')}
+                                  onClick={this.getCode} ref={e => this.$code = e}>获取验证码</span>
                         </Item>
                     </div>
                     <span className={styles.line}></span>
-                    <button disabled={(phone && code && validate && codeValidate) ? false : true} className={(phone && code && validate && codeValidate) ? '' : 'disabled'}
+                    <button disabled={(phone && code && validate && codeValidate) ? false : true}
+                            className={(phone && code && validate && codeValidate) ? '' : 'disabled'}
                             onClick={this.resetPassword}>找回登录密码
                     </button>
                 </div>
                 <span onClick={this.goAccountLogin}>返回登录</span>
+                <Loading loading={loading}/>
             </div>
         )
     }
