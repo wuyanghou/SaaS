@@ -3,7 +3,6 @@ export default class Item extends React.Component{
     state={};
     render(){
         let {label,value,moveToTop,focus,blur,change,type,maxLength,showTips,tipContent}=this.props;
-        console.log(showTips);
         return (
             <div>
                 <span className={'domain ' + (moveToTop ? 'top' : '')}>{label}</span>

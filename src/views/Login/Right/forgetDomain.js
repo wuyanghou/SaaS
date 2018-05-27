@@ -87,7 +87,6 @@ export default class ForgetDomain extends React.Component {
         history.push('/login/domainLogin')
     }
     goLoginHref=(e)=>{
-        console.log(e.target.dataset.href);
         const {protocol,hostname}=window.location;
         const {history}=this.props;
         if(hostname==='localhost'){

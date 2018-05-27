@@ -6,16 +6,20 @@ import qs from 'qs';
 import showMessage from 'COMMON_COMPONENT/utils/globalTips/showMessage'
 
 const gotoLoginPage = () => {
-    window.location.href = window.location.origin+'/login/accountLogin';
+    let pathname='/login/accountLogin';
+    const {hostname} = window.location;
+    if(hostname.split('.')[0]==='www'){
+        pathname='/login/domainLogin';
+    }
+    window.location.href = window.location.origin + pathname;
 }
 
 let loginTimeoutHandled;
 const handleError = (e, noTips) => {
-    console.log('logout');
     if (e.errorType === 3) {
         if (!loginTimeoutHandled) {
             showMessage(e.text);
-            setTimeout(()=>gotoLoginPage(),500);
+            setTimeout(() => gotoLoginPage(), 500);
             loginTimeoutHandled = true;
         }
     } else {
@@ -38,24 +42,24 @@ const httpPost = async (url, params, dataType) => {
         if (dataType === 'json') {
             option = {
                 ...option,
-                data:params,
+                data: params,
                 headers: {
                     "Content-Type": "application/json;charset=utf-8"
                 },
             }
-        }else{
+        } else {
             option = {
                 ...option,
-                data:qs.stringify(params),
+                data: qs.stringify(params),
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
             }
         }
-        return await request(url,option)
-    }catch(e){
+        return await request(url, option)
+    } catch (e) {
         handleError(e)
     }
 }
 
-export {httpGet,httpPost}
+export {httpGet, httpPost}

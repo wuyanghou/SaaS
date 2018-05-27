@@ -4,6 +4,7 @@
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 const vendors = [
     'axios',
     'dva',
@@ -24,6 +25,9 @@ module.exports = {
         //清除 vendor文件夹
         new CleanWebpackPlugin('vendor', {
             root: path.join(__dirname,'../public'),
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         }),
         // 文件输出到 ./vendor 中
         new webpack.DllPlugin({

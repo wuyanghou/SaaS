@@ -47,6 +47,11 @@ export default class AccountLogin extends React.Component {
         console.log(e.target.value);
         this.setState({account: e.target.value.replace(/\s/g, '')})
     }
+    getCompanyByDomain = async (subDomain) => {
+        this.setState({loading: true})
+        let {name, secondDomain} = await getCompanyByDomain({secondDomain: subDomain});
+        this.setState({name, secondDomain, loading: false});
+    }
 
     componentWillMount() {
         const {hostname} = window.location;
@@ -61,20 +66,23 @@ export default class AccountLogin extends React.Component {
         this.getCompanyByDomain(subDomain)
     }
 
-    getCompanyByDomain = async (subDomain) => {
-        this.setState({loading: true})
-        let {name, secondDomain} = await getCompanyByDomain({secondDomain: subDomain});
-        this.setState({name, secondDomain, loading: false});
+
+    componentDidMount(){
+        // setTimeout(()=>{
+        //     console.log(8989);
+        //     this.$container.focus();
+        // },100)
     }
+
 
     render() {
         let {accountToTop, pwdToTop, account, password, name, showPassword, loading} = this.state;
+        console.log(password, account);
         return (
-            <div className={styles.account}>
+            <div className={styles.account} ref={e=>this.$container=e}>
                 <div className={styles.company}>{name}</div>
                 <div className={styles.tips}>Essential系统</div>
                 <div className={styles.form}>
-
                     <div>
                         <Item
                             label={'账号'}
