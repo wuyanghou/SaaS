@@ -2,7 +2,7 @@
  * Created by luoming on 2018/5/5
  */
 import styles from './index.less';
-import {Route, Switch} from 'dva/router';
+import {Route, Switch,Redirect} from 'dva/router';
 import dynamic from 'dva/dynamic';
 
 const DomainLogin = dynamic({
@@ -35,12 +35,13 @@ export default class Home extends React.Component {
                             management and fast office work here.
                         </div>
                     </div>
-                    <Switch>
-                        <Route path={`${this.props.match.path}/domainLogin`} component={DomainLogin}/>
-                        <Route path={`${this.props.match.path}/accountLogin`} component={AccountLogin}/>
-                        <Route path={`${this.props.match.path}/forgetDomain`} component={ForgetDomain}/>
-                        <Route path={`${this.props.match.path}/forgetAccount`} component={ForgetAccount}/>
-                        <Route path={`${this.props.match.path}/resetPassword`} component={ResetPassword}/>
+                    <Switch>s
+                        <Route path={`/login/domainLogin`} component={DomainLogin}/>
+                        <Route path={`/login/accountLogin`} component={AccountLogin}/>
+                        <Route path={`/login/forgetDomain`} component={ForgetDomain}/>
+                        <Route path={`/login/forgetAccount`} component={ForgetAccount}/>
+                        <Route path={`/login/resetPassword`} component={ResetPassword}/>
+                        <Redirect to="/login/domainLogin" />
                     </Switch>
                 </div>
             </div>

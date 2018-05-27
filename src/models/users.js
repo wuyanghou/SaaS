@@ -47,11 +47,12 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       console.log(9090);
-      return history.listen(({ pathname, search }) => {
-        const query = queryString.parse(search);
-        if (pathname === '/users') {
-          dispatch({ type: 'fetch', payload: query });
-        }
+      return history.listen((location) => {
+        // const query = queryString.parse(search);
+        // if (pathname === '/users') {
+        //   dispatch({ type: 'fetch', payload: query });
+        // }
+          console.log(location);
       });
     },
   },

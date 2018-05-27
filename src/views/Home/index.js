@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {connect} from 'dva';
-import {Route, Switch} from 'dva/router';
+import {Route, Switch,Redirect} from 'dva/router';
 import dynamic from 'dva/dynamic';
 import styles from './index.less';
 import SideBar from './SideBar/index';
@@ -33,7 +33,6 @@ export default class Home extends React.Component {
 
     componentWillMount() {
         const {location, history} = this.props;
-        console.log(this.props);
         if (location.pathname === '/') {
             history.push('/Dashboard')
         }
@@ -53,7 +52,7 @@ export default class Home extends React.Component {
                         <Route path='/Setting/personal' exact component={Personal}/>
                         <Route path='/Setting/personal/edit' exact component={PersonalEdit}/>
                         <Route path='/Setting/alterpwd' component={DashBoard}/>
-                        <Route path='*' component={NotFound}/>
+                        <Redirect to="/Dashboard" />
                     </Switch>
                 </Page>
             </div>
